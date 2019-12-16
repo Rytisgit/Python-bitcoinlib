@@ -4,7 +4,7 @@
 
 ### Usage:
 
-Connect to node through ssh:
+#### Connect to node through ssh:
 
 putty
 
@@ -13,6 +13,8 @@ putty
 or with ssh:
 
 `ssh username@158.129.140.201 -p 3637`
+
+#### after logging on:
 
 instal required library:
 
