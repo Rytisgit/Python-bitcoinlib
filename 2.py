@@ -8,24 +8,23 @@ def Compare():
     p = RawProxy()
     blockHash = p.getblockhash(input("block height:"))
     block = p.getblock(blockHash)
-    hex = (Endian(block['version']) + ReOrder(block['previousblockhash']) + ReOrder(block['merkleroot']) + Endian(
-        block['time']) + ReOrder(block['bits']) + Endian(block['nonce']))
+    hex = (CalcEndian(block['version']) + ReOrder(block['previousblockhash']) + ReOrder(block['merkleroot']) + CalcEndian(
+        block['time']) + ReOrder(block['bits']) + CalcEndian(block['nonce']))
     FullHash = codecs.decode(
         codecs.encode(hashlib.sha256(hashlib.sha256(codecs.decode(hex, 'hex')).digest()).digest()[::-1], 'hex_codec'))
     print("Block Hash", blockHash)
     print("Verif Hash", FullHash)
     print("Same : ", blockHash == FullHash)
 
-def Endian(Numb):
-    return codecs.encode(struct.pack("<I", Numb), 'hex').decode()
+def CalcEndian(number):
+    return codecs.encode(struct.pack("<I", number), 'hex').decode()
 
-
-def ReOrder(Line):
-    Swapper = list(Line[::-1])
-    Swapped = ""
-    for i in range(0, len(Swapper), 2):
-        Swapped = Swapped + (Swapper[i + 1] + Swapper[i])
-    return Swapped
+def ReOrder(line):
+    List = list(line[::-1])
+    swap = ""
+    for i in range(0, len(List), 2):
+        swap = swap + (List[i + 1] + List[i])
+    return swap
 
 
 Compare()
